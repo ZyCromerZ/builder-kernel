@@ -12,24 +12,17 @@ git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 
-#fix gcc crash
-checkLib="$(ls /usr/lib/x86_64-linux-gnu/ | grep libisl.so -m1)"
-if [ "$checkLib" != "libisl.so.15" ];then
-    cp -af /usr/lib/x86_64-linux-gnu/$checkLib /usr/lib/x86_64-linux-gnu/libisl.so.15
-fi
-
-echo "fix gcc crash"
-
 GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
-CC="$(pwd)/Getclang/bin/clang"
-IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
+IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
+echo "getting last commit"
 GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
-GetCore=$(nproc --all)
+echo "get all cores"
+GetCore=99
 
 echo "setup builder"
 
