@@ -26,6 +26,7 @@ PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
 export KBUILD_BUILD_USER="root"
+echo "siap siap beres"
 # sticker plox
 sticker() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
@@ -110,12 +111,15 @@ zipping() {
     rm -rf "[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
     cd .. 
 }
-echo "build started"
-TANGGAL=$(date +"%F-%S")
-START=$(date +"%s")
-# sticker >/dev/null
-# sendinfo >/dev/null
-compile
-END=$(date +"%s")
-DIFF=$(($END - $START))
-zipping
+buildSekarang() {
+    echo "build started"
+    TANGGAL=$(date +"%F-%S")
+    START=$(date +"%s")
+    # sticker >/dev/null
+    # sendinfo >/dev/null
+    compile
+    END=$(date +"%s")
+    DIFF=$(($END - $START))
+    zipping
+}
+buildSekarang
