@@ -102,6 +102,6 @@ if ! [ -a "$IMAGE" ]; then
     exit 1
 fi
 cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
-zipping
 END=$(date +"%s")
 DIFF=$(($END - $START))
+zipping
