@@ -28,20 +28,6 @@ export KBUILD_BUILD_HOST=ZyCromerZ
 GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
 GetCore=$(nproc --all)
-# sticker plox
-sticker() {
-    curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
-        -d sticker="CAADBQADVAADaEQ4KS3kDsr-OWAUFgQ" \
-        -d chat_id=$chat_id
-}
-# Send info plox channel
-sendinfo() {
-    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
-        -d "disable_web_page_preview=true" \
-        -d "parse_mode=html" \
-        -d text="Build started on <code>Circle CI/CD</code>%0AFor device <b>Max pro m2</b>%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #Try"
-}
 # Push kernel to channel
 push() {
     ZIP="$1"
@@ -113,8 +99,6 @@ buildSekarang() {
     echo "build started"
     TANGGAL=$(date +"%F-%S")
     START=$(date +"%s")
-    # sticker >/dev/null
-    # sendinfo >/dev/null
     compile
     END=$(date +"%s")
     DIFF=$(($END - $START))
