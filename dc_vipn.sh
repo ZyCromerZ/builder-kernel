@@ -2,10 +2,11 @@
 echo "Cloning dependencies"
 branch="DeadlyCute/20200204/VIPN"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
-echo "getting last commit"
-GetLastCommit="$(git log --pretty=format:'%h' -1)"
 
 cd kernel
+
+echo "getting last commit"
+GetLastCommit="$(git log --pretty=format:'%h' -1)"
 
 git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b daily/10.0 Getclang
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r50 GetGcc
@@ -74,15 +75,23 @@ zipping() {
         wget https://github.com/ZyCromerZ/spectrum/raw/master/vipn.rc
         cp -af vipn.rc init.spectrum.rc
         rm -rf vipn.rc
+    elif [[ "$KERNEL_NAME" == *"VirusNgepet"* ]];then
+        wget https://github.com/ZyCromerZ/spectrum/raw/master/private-3.0.rc
+        cp -af private-3.0.rc init.spectrum.rc
+        rm -rf private-3.0.rc
+    elif [[ "$KERNEL_NAME" == *"VIP"* ]];then
+        wget https://github.com/ZyCromerZ/spectrum/raw/master/vip.rc
+        cp -af vip.rc init.spectrum.rc
+        rm -rf vip.rc
     fi
     cp -af anykernel-real.sh anykernel.sh
     sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME-$GetLastCommit by ZyCromerZ/g" anykernel.sh
         if [ -e init.spectrum.rc ];then
             sed -i "s/setprop persist.spectrum.kernel.*/setprop persist.spectrum.kernel $KERNEL_NAME/g" init.spectrum.rc
         fi
-    Type=""
+    Type="Q"
     if [ ! -z "$1" ];then
-        Type="67"
+        Type="$1"
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"

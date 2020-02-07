@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-branch="VirusNgepet/20200120/q"
+branch="VirusNgepet/20200120/VIP-q"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 cd kernel
@@ -91,7 +91,7 @@ zipping() {
         fi
     Type="Q"
     if [ ! -z "$1" ];then
-        Type="$1"
+        Type="67"
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
