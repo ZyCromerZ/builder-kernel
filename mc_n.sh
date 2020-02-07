@@ -7,7 +7,7 @@ GetLastCommit="$(git log --pretty=format:'%h' -1)"
 
 cd kernel
 
-git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b 10.0 Getclang
+git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b daily/10.0 Getclang
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r50 GetGcc
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r50 GetGcc_32
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
