@@ -84,7 +84,7 @@ zipping() {
         if [ -e init.spectrum.rc ];then
             sed -i "s/setprop persist.spectrum.kernel.*/setprop persist.spectrum.kernel $KERNEL_NAME/g" init.spectrum.rc
         fi
-    Type=""
+    Type="P"
     if [ ! -z "$1" ];then
         Type="67"
     fi
