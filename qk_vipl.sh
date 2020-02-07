@@ -26,7 +26,7 @@ PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
 export KBUILD_BUILD_USER="root"
-echo "siap siap beres"
+GetCore=$(nproc --all)
 # sticker plox
 sticker() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
@@ -61,14 +61,13 @@ finerr() {
 }
 # Compile plox
 compile() {
-   GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
-   export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
-   GetCore=$(nproc --all)
-   make O=out ARCH=arm64 X01BD_defconfig
-       make -j$(($GetCore+1)) O=out \
-                             ARCH=arm64 \
-			     CROSS_COMPILE=aarch64-linux-android- \
-			     CROSS_COMPILE_ARM32=arm-linux-androideabi-
+    GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
+    export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
+    make O=out ARCH=arm64 X01BD_defconfig
+    make -j$(($GetCore+1)) O=out \
+                            ARCH=arm64 \
+                CROSS_COMPILE=aarch64-linux-android- \
+                CROSS_COMPILE_ARM32=arm-linux-androideabi-
     if ! [ -a "$IMAGE" ]; then
         finerr
         exit 1
