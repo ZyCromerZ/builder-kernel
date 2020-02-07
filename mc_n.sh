@@ -7,7 +7,20 @@ GetLastCommit="$(git log --pretty=format:'%h' -1)"
 
 cd kernel
 
-git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b 10.0 Getclang
+mkdir Getclang
+cd Getclang
+
+git init
+git remote add  origin "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86"
+
+git config core.sparseCheckout true
+
+# Loops over remaining args
+echo "clang-r370808b/*" >> .git/info/sparse-checkout
+
+git pull origin master --depth=1
+cd ..
+
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r53 GetGcc
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r53 GetGcc_32
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
@@ -17,7 +30,7 @@ echo "Done"
 GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
-PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
+PATH="${PWD}/Getclang/clang-r370808b/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
