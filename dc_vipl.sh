@@ -3,13 +3,13 @@ echo "Cloning dependencies"
 branch="DeadlyCute/20200204/VIPL"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 echo "getting last commit"
-GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
+GetLastCommit="$(git log --pretty=format:'"%h"' -1)"
 
 cd kernel
 
 git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b 10.0 Getclang
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r53 GetGcc
-# git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r53 GetGcc_32
+git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r53 GetGcc_32
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
@@ -17,7 +17,7 @@ echo "Done"
 GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
-PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PATH}"
+PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
@@ -94,8 +94,8 @@ echo "set waktu"
 make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
 make -j$(($GetCore+1))  O=out \
                         ARCH=arm64 \
-                        CROSS_COMPILE="$(pwd)/GetGcc/bin/aarch64-linux-android-" \
-                        CC="$(pwd)/Getclang/bin/clang"
+                        CROSS_COMPILE=aarch64-linux-android- \
+			            CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
 if ! [ -a "$IMAGE" ]; then
     finerr
