@@ -14,7 +14,7 @@ git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 
-GCC="$(pwd)/GetGcc/bin/aarch64-linux-gnu-"
+GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
@@ -94,7 +94,7 @@ echo "set waktu"
 make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
 make -j$(($GetCore+1))  O=out \
                         ARCH=arm64 \
-                        CROSS_COMPILE=aarch64-linux-gnu- \
+                        CROSS_COMPILE=aarch64-linux-android- \
 			            CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
 if ! [ -a "$IMAGE" ]; then
