@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 branch="QuantumKiller/20200204/iLoC"
-git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
+git clone https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 echo "getting last commit"
 GetLastCommit="$(git log --pretty=format:'"%h"' -1)"
 
