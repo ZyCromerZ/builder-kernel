@@ -25,7 +25,8 @@ export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
-export KBUILD_BUILD_USER="root"
+GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
+export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
 GetCore=$(nproc --all)
 # sticker plox
 sticker() {
@@ -61,8 +62,6 @@ finerr() {
 }
 # Compile plox
 compile() {
-    GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
-    export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
     make O=out ARCH=arm64 X01BD_defconfig
     make -j$(($GetCore+1)) O=out \
                             ARCH=arm64 \
@@ -76,7 +75,6 @@ compile() {
 }
 # Zipping
 zipping() {
-    GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
     KERNEL_NAME=$(cat "$(pwd)/arch/arm64/configs/X01BD_defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
     ZIP_KERNEL_VERSION="4.4.$(cat "$(pwd)/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
     cd AnyKernel || exit 1

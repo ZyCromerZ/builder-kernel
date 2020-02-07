@@ -25,8 +25,9 @@ export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
-export KBUILD_BUILD_USER="root"
-echo "siap siap beres"
+GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
+export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
+GetCore=$(nproc --all)
 # sticker plox
 sticker() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
@@ -61,14 +62,11 @@ finerr() {
 }
 # Compile plox
 compile() {
-   GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
-   export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
-   GetCore=$(nproc --all)
-   make O=out ARCH=arm64 X01BD_defconfig
-       make -j$(($GetCore+1)) O=out \
-                             ARCH=arm64 \
-			     CROSS_COMPILE=aarch64-linux-android- \
-			     CROSS_COMPILE_ARM32=arm-linux-androideabi-
+    make O=out ARCH=arm64 X01BD_defconfig
+    make -j$(($GetCore+1)) O=out \
+                            ARCH=arm64 \
+                CROSS_COMPILE=aarch64-linux-android- \
+                CROSS_COMPILE_ARM32=arm-linux-androideabi-
     if ! [ -a "$IMAGE" ]; then
         finerr
         exit 1
@@ -77,7 +75,6 @@ compile() {
 }
 # Zipping
 zipping() {
-    GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
     KERNEL_NAME=$(cat "$(pwd)/arch/arm64/configs/X01BD_defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
     ZIP_KERNEL_VERSION="4.4.$(cat "$(pwd)/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
     cd AnyKernel || exit 1
