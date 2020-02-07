@@ -2,6 +2,8 @@
 echo "Cloning dependencies"
 branch="DeadlyCute/20200204/VIPL"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
+echo "getting last commit"
+GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
 
 cd kernel
 
@@ -18,8 +20,6 @@ export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=ZyCromerZ
-echo "getting last commit"
-GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
 echo "get all cores"
 GetCore=99
