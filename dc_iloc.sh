@@ -18,6 +18,8 @@ if [ "$checkLib" != "libisl.so.15" ];then
     cp -af /usr/lib/x86_64-linux-gnu/$checkLib /usr/lib/x86_64-linux-gnu/libisl.so.15
 fi
 
+echo "fix gcc crash"
+
 GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
 CC="$(pwd)/Getclang/bin/clang"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
@@ -28,6 +30,11 @@ export KBUILD_BUILD_HOST=ZyCromerZ
 GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
 export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
 GetCore=$(nproc --all)
+
+echo "setup builder"
+
+
+echo "prepare push"
 # Push kernel to channel
 push() {
     ZIP="$1"
@@ -37,6 +44,7 @@ push() {
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).%0AFor <b>X01BD</b>%0A<b>$(${CC} -v | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>%0A<b>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
 }
+echo "prepare finner"
 # Fin Error
 finerr() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
@@ -46,6 +54,7 @@ finerr() {
         -d text="Build kernel from branch : $branch failed -_-"
     exit 1
 }
+echo "prepare zipping"
 # Zipping
 zipping() {
     KERNEL_NAME=$(cat "$(pwd)/arch/arm64/configs/X01BD_defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
