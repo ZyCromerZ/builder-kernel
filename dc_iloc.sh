@@ -7,19 +7,20 @@ cd kernel
 
 echo "getting last commit"
 
-git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b daily/10.0 Getclang
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r50 GetGcc
+git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
+git clone --depth=1 https://github.com/baalajimaestro/aarch64-maestro-linux-android.git -b 05022020 GetGcc
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r50 GetGcc_32
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 
-GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
+GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_USER=ZyCromerZ
+export KBUILD_BUILD_HOST="Circleci"
 echo "get all cores"
 GetCore=$(nproc --all)
 
@@ -31,7 +32,7 @@ echo "prepare push"
 push() {
     ZIP="$1"
     curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
-        -F chat_id="$chat_id" \
+        -F chat_id="$chat_id_private" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
@@ -42,7 +43,7 @@ echo "prepare finner"
 # Fin Error
 finerr() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
+        -d chat_id="$chat_id_private" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=markdown" \
         -d text="Build kernel from branch : $branch failed -_-"
@@ -83,7 +84,7 @@ zipping() {
         rm -rf vip.rc
     fi
     cp -af anykernel-real.sh anykernel.sh
-    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME-$GetLastCommit by ZyCromerZ/g" anykernel.sh
+    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME- by ZyCromerZ/g" anykernel.sh
         if [ -e init.spectrum.rc ];then
             sed -i "s/setprop persist.spectrum.kernel.*/setprop persist.spectrum.kernel $KERNEL_NAME/g" init.spectrum.rc
         fi
@@ -91,9 +92,9 @@ zipping() {
     if [ ! -z "$1" ];then
         Type="67"
     fi
-    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
-    push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
-    rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
+    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+    push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
+    rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
     cd .. 
 }
 echo "build started"
@@ -105,8 +106,6 @@ START=$(date +"%s")
 echo "set waktu"
 
 buildKernel() {
-    GetLastCommit="$(git log --pretty=format:'%h' -1)"
-    export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
     if [ ! -z "$1" ];then
         if [ "$1" == "67Hz" ];then
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aafb3e87895f0e1b714a254861e2e8dfb32c3124.patch | git am -3
@@ -115,7 +114,7 @@ buildKernel() {
     make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
     make -j$(($GetCore+1))  O=out \
                             ARCH=arm64 \
-                            CROSS_COMPILE=aarch64-linux-android- \
+                            CROSS_COMPILE=aarch64-maestro-linux-gnu- \
                             CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
     if ! [ -a "$IMAGE" ]; then
