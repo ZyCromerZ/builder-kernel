@@ -46,20 +46,6 @@ finerr() {
         -d text="Build kernel from branch : $branch failed -_-"
     exit 1
 }
-# Compile plox
-compile() {
-    make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
-    make -j$(($GetCore+1))  O=out \
-                            ARCH=arm64 \
-                            CROSS_COMPILE=$(pwd)/GetGcc/bin/aarch64-linux-android- \
-                            CC="$(pwd)/Getclang/bin/clang"
-
-    if ! [ -a "$IMAGE" ]; then
-        finerr
-        exit 1
-    fi
-   cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
-}
 # Zipping
 zipping() {
     KERNEL_NAME=$(cat "$(pwd)/arch/arm64/configs/X01BD_defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
@@ -95,13 +81,25 @@ zipping() {
     rm -rf "[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
     cd .. 
 }
-buildSekarang() {
-    echo "build started"
-    TANGGAL=$(date +"%F-%S")
-    START=$(date +"%s")
-    compile
-    END=$(date +"%s")
-    DIFF=$(($END - $START))
-    zipping
-}
-buildSekarang
+echo "build started"
+
+TANGGAL=$(date +"%F-%S")
+echo "set tanggal"
+
+START=$(date +"%s")
+echo "set waktu"
+
+make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
+make -j$(($GetCore+1))  O=out \
+                        ARCH=arm64 \
+                        CROSS_COMPILE="$(pwd)/GetGcc/bin/aarch64-linux-android-" \
+                        CC="$(pwd)/Getclang/bin/clang"
+
+if ! [ -a "$IMAGE" ]; then
+    finerr
+    exit 1
+fi
+cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
+zipping
+END=$(date +"%s")
+DIFF=$(($END - $START))
