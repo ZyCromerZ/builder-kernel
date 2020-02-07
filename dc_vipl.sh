@@ -1,32 +1,32 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 branch="DeadlyCute/20200204/VIPL"
-# git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
+git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
-# cd kernel
+cd kernel
 
-# git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b 10.0 Getclang
-# git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r53 GetGcc
+git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b 10.0 Getclang
+git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r53 GetGcc
 # git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r53 GetGcc_32
-# git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
+git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
-# echo "Done"
+echo "Done"
 
-# #fix gcc crash
-# checkLib="$(ls /usr/lib/x86_64-linux-gnu/ | grep libisl.so -m1)"
-# if [ "$checkLib" != "libisl.so.15" ];then
-#     cp -af /usr/lib/x86_64-linux-gnu/$checkLib /usr/lib/x86_64-linux-gnu/libisl.so.15
-# fi
+#fix gcc crash
+checkLib="$(ls /usr/lib/x86_64-linux-gnu/ | grep libisl.so -m1)"
+if [ "$checkLib" != "libisl.so.15" ];then
+    cp -af /usr/lib/x86_64-linux-gnu/$checkLib /usr/lib/x86_64-linux-gnu/libisl.so.15
+fi
 
-# GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
-# CC="$(pwd)/Getclang/bin/clang"
-# IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
-# export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
-# PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
-# export ARCH=arm64
-# export KBUILD_BUILD_HOST=ZyCromerZ
-# GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
-# export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
+GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
+CC="$(pwd)/Getclang/bin/clang"
+IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
+export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
+PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PATH}"
+export ARCH=arm64
+export KBUILD_BUILD_HOST=ZyCromerZ
+GetLastCommit=$(git show | grep "commit " | awk '{if($1=="commit") print $2;exit}' | cut -c 1-12)
+export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
 GetCore=$(nproc --all)
 # sticker plox
 sticker() {
@@ -62,11 +62,12 @@ finerr() {
 }
 # Compile plox
 compile() {
-    make O=out ARCH=arm64 X01BD_defconfig
-    make -j$(($GetCore+1)) O=out \
+    make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
+    make -j$(($GetCore+1))  O=out \
                             ARCH=arm64 \
-                CROSS_COMPILE=aarch64-linux-android- \
-                CROSS_COMPILE_ARM32=arm-linux-androideabi-
+                            CROSS_COMPILE=$(pwd)/GetGcc/bin/aarch64-linux-android- \
+                            CC="$(pwd)/Getclang/bin/clang"
+
     if ! [ -a "$IMAGE" ]; then
         finerr
         exit 1
@@ -114,9 +115,9 @@ buildSekarang() {
     START=$(date +"%s")
     # sticker >/dev/null
     # sendinfo >/dev/null
-    # compile
-    # END=$(date +"%s")
-    # DIFF=$(($END - $START))
-    # zipping
+    compile
+    END=$(date +"%s")
+    DIFF=$(($END - $START))
+    zipping
 }
 buildSekarang
