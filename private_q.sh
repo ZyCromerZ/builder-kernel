@@ -6,7 +6,6 @@ git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $b
 cd kernel
 
 echo "getting last commit"
-GetLastCommit="$(git log --pretty=format:'%h' -1)"
 
 git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b daily/10.0 Getclang
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r50 GetGcc
@@ -21,7 +20,6 @@ export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
 export KBUILD_BUILD_USER=ZyCromerZ
-export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
 echo "get all cores"
 GetCore=$(nproc --all)
 
@@ -91,7 +89,7 @@ zipping() {
         fi
     Type="Q"
     if [ ! -z "$1" ];then
-        Type="$1"
+        Type="67"
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
@@ -107,14 +105,12 @@ START=$(date +"%s")
 echo "set waktu"
 
 buildKernel() {
+    GetLastCommit="$(git log --pretty=format:'%h' -1)"
+    export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
     if [ ! -z "$1" ];then
         if [ "$1" == "67Hz" ];then
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aafb3e87895f0e1b714a254861e2e8dfb32c3124.patch | git am -3
         fi
-    fi
-    if [ ! -z "$1" ];then
-        GetLastCommit="$(git log --pretty=format:'%h' -1)"
-        export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
     fi
     make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
     make -j$(($GetCore+1))  O=out \
