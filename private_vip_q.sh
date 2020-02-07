@@ -7,14 +7,14 @@ cd kernel
 
 echo "getting last commit"
 
-git clone --depth=1 https://github.com/NusantaraDevs/DragonTC.git -b daily/10.0 Getclang
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r50 GetGcc
+git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
+git clone --depth=1 https://github.com/baalajimaestro/aarch64-maestro-linux-android.git -b 05022020 GetGcc
 git clone --depth=1 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r50 GetGcc_32
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 
-GCC="$(pwd)/GetGcc/bin/aarch64-linux-android-"
+GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
@@ -115,7 +115,7 @@ buildKernel() {
     make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
     make -j$(($GetCore+1))  O=out \
                             ARCH=arm64 \
-                            CROSS_COMPILE=aarch64-linux-android- \
+                            CROSS_COMPILE=aarch64-maestro-linux-gnu- \
                             CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
     if ! [ -a "$IMAGE" ]; then
