@@ -19,8 +19,8 @@ IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export CONFIG_PATH=$PWD/arch/arm64/configs/X01BD_defconfig
 PATH="${PWD}/Getclang/bin:${PWD}/GetGcc/bin:${PWD}/GetGcc_32/bin:${PATH}"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=ZyCromerZ
-export KBUILD_BUILD_USER="$GetLastCommit-Circleci"
+export KBUILD_BUILD_USER=ZyCromerZ
+export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
 echo "get all cores"
 GetCore=$(nproc --all)
 
@@ -36,8 +36,8 @@ push() {
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
-        For <b>X01BD</b>
-        <b>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
+For <b>X01BD</b>
+<b>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
 }
 echo "prepare finner"
 # Fin Error
@@ -80,9 +80,13 @@ zipping() {
         if [ -e init.spectrum.rc ];then
             sed -i "s/setprop persist.spectrum.kernel.*/setprop persist.spectrum.kernel $KERNEL_NAME/g" init.spectrum.rc
         fi
-    zip -r "[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
-    push "[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
-    rm -rf "[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
+    Type=""
+    if [ ! -z "$1" ];then
+        Type="67"
+    fi
+    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+    push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
+    rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetLastCommit.zip"
     cd .. 
 }
 echo "build started"
@@ -93,17 +97,35 @@ echo "set tanggal"
 START=$(date +"%s")
 echo "set waktu"
 
-make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
-make -j$(($GetCore+1))  O=out \
-                        ARCH=arm64 \
-                        CROSS_COMPILE=aarch64-linux-android- \
-			            CROSS_COMPILE_ARM32=arm-linux-androideabi-
+buildKernel() {
+    if [ ! -z "$1" ];then
+        if [ "$1" == "67Hz" ];then
+            curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aafb3e87895f0e1b714a254861e2e8dfb32c3124.patch | git am -3
+        fi
+    fi
+    if [ ! -z "$1" ];then
+        GetLastCommit="$(git log --pretty=format:'%h' -1)"
+        export KBUILD_BUILD_HOST="$GetLastCommit-Circleci"
+    fi
+    make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
+    make -j$(($GetCore+1))  O=out \
+                            ARCH=arm64 \
+                            CROSS_COMPILE=aarch64-linux-android- \
+                            CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
-if ! [ -a "$IMAGE" ]; then
-    finerr
-    exit 1
-fi
-cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
-END=$(date +"%s")
-DIFF=$(($END - $START))
-zipping
+    if ! [ -a "$IMAGE" ]; then
+        finerr
+        exit 1
+    fi
+    cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
+    END=$(date +"%s")
+    DIFF=$(($END - $START))
+    if [ ! -z "$1" ];then
+        zipping "$1"
+    else
+        zipping
+    fi
+}
+buildKernel
+
+buildKernel "67Hz"
