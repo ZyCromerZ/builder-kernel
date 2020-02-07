@@ -4,7 +4,8 @@ branch="VirusNgepet/20200120/q"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 cd kernel
-
+GetBranch=$(git rev-parse --abbrev-ref HEAD)
+GetCommit=$(git log --pretty=format:'%h' -1)
 echo "getting last commit"
 
 git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
@@ -17,7 +18,6 @@ GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export ARCH=arm64
 export KBUILD_BUILD_USER=ZyCromerZ
-export KBUILD_BUILD_HOST="Circleci"
 echo "get all cores"
 GetCore=$(nproc --all)
 
@@ -87,7 +87,7 @@ zipping() {
         fi
     Type="Q"
     if [ ! -z "$1" ];then
-        Type="67"
+        Type="Q$1"
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
@@ -107,7 +107,10 @@ buildKernel() {
         if [ "$1" == "67Hz" ];then
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aafb3e87895f0e1b714a254861e2e8dfb32c3124.patch | git am -3
         fi
+        GetBranch=$(git rev-parse --abbrev-ref HEAD)
+        GetCommit=$(git log --pretty=format:'%h' -1)
     fi
+    export KBUILD_BUILD_HOST="$GetBranch-$GetCommit"
     make -j$(($GetCore+1))  O=out ARCH=arm64 X01BD_defconfig
     make -j$(($GetCore+1))  O=out \
                             ARCH=arm64 \
