@@ -5,18 +5,22 @@ branch="VirusNgepet/20200120/VIP-p"
 # linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
+chat_id="$chat_id_private"
+
 cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
 HeadCommit=$GetCommit
 echo "getting last commit"
-
+GetREALlog="$(git log --pretty='format:%C(auto)%h : %s' -1)"
+Getlog="${GetREALlog/\&/"and"}"
 git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
 git clone --depth=1 https://github.com/baalajimaestro/aarch64-maestro-linux-android.git -b 05022020 GetGcc
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 rFolder=$(pwd)
+CC="$(pwd)/Getclang/bin/clang"
 GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export ARCH=arm64
@@ -26,13 +30,27 @@ GetCore=$(nproc --all)
 
 echo "setup builder"
 
+ForSendInfo="Build started on <code>Circle CI/CD</code>
+
+Branch 
+- <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)
+
+Under commit 
+- <code>$Commit</code>
+
+Using compiler: 
+- <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+
+Started on <code>$(date)</code>
+<b>Build Status:</b> #STABLE"
 
 echo "prepare push"
 # Push kernel to channel
 push() {
     ZIP="$1"
     curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
-        -F chat_id="$chat_id_private" \
+        -F chat_id="$chat_id" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
@@ -48,23 +66,23 @@ pushSF() {
         Text="New kernel !!%0ABuild took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).%0A- Kernel name : $2%0A -Refreshrate : 60Hz(default)%0A%0Alink : $linkKernel"
     fi
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id_private" \
+        -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=markdown" \
         -d text="$Text"
 }
 sendinfo() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id_private" \
+        -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="Build started on <code>Circle CI/CD</code>%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #STABLE"
+        -d text="$ForSendInfo"
 }
 echo "prepare finner"
 # Fin Error
 finerr() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id_private" \
+        -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=markdown" \
         -d text="Build kernel from branch : $branch failed -_-"

@@ -10,13 +10,15 @@ GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
 HeadCommit=$GetCommit
 echo "getting last commit"
-
+GetREALlog="$(git log --pretty='format:%C(auto)%h : %s' -1)"
+Getlog="${GetREALlog/\&/"and"}"
 git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
 git clone --depth=1 https://github.com/baalajimaestro/aarch64-maestro-linux-android.git -b 05022020 GetGcc
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
 echo "Done"
 rFolder=$(pwd)
+CC="$(pwd)/Getclang/bin/clang"
 GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export ARCH=arm64
@@ -26,6 +28,20 @@ GetCore=$(nproc --all)
 
 echo "setup builder"
 
+ForSendInfo="Build started on <code>Circle CI/CD</code>
+
+Branch 
+- <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)
+
+Under commit 
+- <code>$Commit</code>
+
+Using compiler: 
+- <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+
+Started on <code>$(date)</code>
+<b>Build Status:</b> #STABLE"
 
 echo "prepare push"
 # Push kernel to channel
@@ -58,7 +74,7 @@ sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="Build started on <code>Circle CI/CD</code>%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #STABLE"
+        -d text="$ForSendInfo"
 }
 echo "prepare finner"
 # Fin Error
