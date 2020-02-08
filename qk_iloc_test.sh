@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-branch="QuantumKiller/20200204/VIPL-TEST"
+branch="QuantumKiller/20200204/iLoC-TEST"
 FolderUpload="QuantumKiller/TEST"
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
