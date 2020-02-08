@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-branch="VirusNgepet/20200120/VIP-q"
+branch="VirusNgepet/20200120/VIP-p"
+# FolderUpload="QuantumKiller"
+# linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
+HeadCommit=$GetCommit
 echo "getting last commit"
 
 git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
@@ -35,6 +38,27 @@ push() {
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 For <b>X01BD</b>
 <b>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</b>"
+}
+pushSF() {
+    Zip_File="$(pwd)/$1"
+    rsync -avP -e "ssh -o StrictHostKeyChecking=no" "$Zip_File" $my_host@frs.sourceforge.net:/home/frs/project/zyc-kernel/$FolderUpload/
+    if [ "$3" != "" ];then
+        Text="New kernel !!%0ABuild took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).%0A- Kernel name : $2%0A -Refreshrate : $3(oc)%0A%0Alink : $linkKernel"
+    else
+        Text="New kernel !!%0ABuild took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).%0A- Kernel name : $2%0A -Refreshrate : 60Hz(default)%0A%0Alink : $linkKernel"
+    fi
+    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+        -d chat_id="$chat_id_private" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=markdown" \
+        -d text="$Text"
+}
+sendinfo() {
+    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+        -d chat_id="$chat_id_private" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=html" \
+        -d text="Build started on <code>Circle CI/CD</code>%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b> #STABLE"
 }
 echo "prepare finner"
 # Fin Error
@@ -91,6 +115,7 @@ zipping() {
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
+    # pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" "$KERNEL_NAME" "$Type"
     rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
     cd .. 
 }
@@ -99,13 +124,16 @@ echo "build started"
 TANGGAL=$(date +"%F-%S")
 echo "set tanggal"
 
-START=$(date +"%s")
-echo "set waktu"
-
 buildKernel() {
+    START=$(date +"%s")
     if [ ! -z "$1" ];then
         if [ "$1" == "67Hz" ];then
+            git reset $HeadCommit --hard
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aafb3e87895f0e1b714a254861e2e8dfb32c3124.patch | git am -3
+        fi
+        if [ "$1" == "71Hz" ];then
+            git reset $HeadCommit --hard
+            curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/aca1f53268e819422949464b7fcacf545aa71ab9.patch | git am -3
         fi
         GetBranch=$(git rev-parse --abbrev-ref HEAD)
         GetCommit=$(git log --pretty=format:'%h' -1)
@@ -132,4 +160,6 @@ buildKernel() {
         zipping
     fi
 }
+sendinfo
+
 buildKernel
