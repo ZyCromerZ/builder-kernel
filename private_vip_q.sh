@@ -43,7 +43,7 @@ Using compiler:
 - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
 
 Started on <code>$(date)</code>
-<b>Build Status:</b> #STABLE"
+<b>Build Status:</b> #PRIVATE"
 
 echo "prepare push"
 # Push kernel to channel
