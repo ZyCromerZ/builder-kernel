@@ -131,10 +131,10 @@ zipping() {
     if [ ! -z "$1" ];then
         Type="P$1"
     fi
-    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
-    push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
-    # pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" "$KERNEL_NAME" "$Type"
-    rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip"
+    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+    push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip"
+    # pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME.zip" "$KERNEL_NAME-$GetCommit" "$Type"
+    rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip"
     cd .. 
 }
 echo "build started"
