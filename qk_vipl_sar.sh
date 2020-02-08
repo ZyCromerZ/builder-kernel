@@ -44,12 +44,12 @@ chmod +x sender.sh
 
 sendinfo "STABLE"
 
-buildKernel
+buildKernel "" "sf"
 
-buildKernel "65Hz"
+buildKernel "65Hz" "sf"
 
-buildKernel "67Hz"
+buildKernel "67Hz" "sf"
 
-buildKernel "69Hz"
+buildKernel "69Hz" "sf"
 
-buildKernel "71Hz"
+buildKernel "71Hz" "sf"

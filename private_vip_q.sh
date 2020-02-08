@@ -45,12 +45,12 @@ chmod +x sender.sh
 
 sendinfo "PRIVATE"
 
-buildKernel
+buildKernel "Q" ""
 
-buildKernel "65Hz"
+buildKernel "Q65Hz" ""
 
-buildKernel "67Hz"
+buildKernel "Q67Hz" ""
 
-buildKernel "69Hz"
+buildKernel "Q69Hz" ""
 
-buildKernel "71Hz"
+buildKernel "Q71Hz" ""
