@@ -36,7 +36,7 @@ Branch
 - <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)
 
 Under commit 
-- <code>$Commit</code>
+- <code>$Getlog</code>
 
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
