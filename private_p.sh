@@ -6,6 +6,7 @@ branch="VirusNgepet/20200120/p"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 chat_id="$chat_id_private"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=markdown" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$code</code>"
 
 cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
