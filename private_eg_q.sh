@@ -59,8 +59,11 @@ customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/f4145eff14f9b35a426f881132e49c8af6077e87.patch | git am -3
 
+git reset --hard $HeadCommit
+
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
+
 HeadCommit=$GetCommit
 
 buildKernel "P" "" "$chat_id_bot_log"
