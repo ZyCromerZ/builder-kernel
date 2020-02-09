@@ -3,10 +3,8 @@ echo "Cloning dependencies"
 branch="VirusNgepet/20200120/q"
 # FolderUpload="QuantumKiller"
 # linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_private" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
-
-chat_id="$chat_id_private"
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=markdown" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 
 cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
@@ -26,31 +24,25 @@ GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export ARCH=arm64
 export KBUILD_BUILD_USER=ZyCromerZ
-echo "get all cores"
+
 GetCore=$(nproc --all)
 
-echo "setup builder"
-
-echo "prepare push"
 # Push kernel to channel
 
-echo "build started"
-
 TANGGAL=$(date +"%F-%S")
-echo "set tanggal"
 
 wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
-chmod +x sender.sh
+chmod +x sender.shchat_id
 . sender.sh
 
-sendinfo "PRIVATE"
+sendinfo "STABLE" "$chat_id_private"
 
-buildKernel "Q" ""
+buildKernel "Q" "" "$chat_id_private"
 
-buildKernel "Q65Hz" ""
+buildKernel "Q65Hz" "" "$chat_id_private"
 
-buildKernel "Q67Hz" ""
+buildKernel "Q67Hz" "" "$chat_id_private"
 
-buildKernel "Q69Hz" ""
+buildKernel "Q69Hz" "" "$chat_id_private"
 
-buildKernel "Q71Hz" ""
+buildKernel "Q71Hz" "" "$chat_id_private"

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-branch="DeadlyCute/20200204/VIPN"
-FolderUpload="DeadlyCute"
-linkKernel="http://bit.ly/DeadlyCute / http://bit.ly/DC-Kernels"
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
+branch="EmptyGlory/20200209/q"
+# FolderUpload="QuantumKiller"
+# linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_group_indo" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 cd kernel
@@ -32,17 +32,13 @@ GetCore=$(nproc --all)
 TANGGAL=$(date +"%F-%S")
 
 wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
-chmod +x sender.sh
+chmod +x sender.shchat_id
 . sender.sh
 
-sendinfo "STABLE"
+sendinfo "PerSoNal" "$chat_id_group_indo"
 
-buildKernel "" "sf"
+buildKernel "Q" "" "$chat_id_bot_log"
 
-buildKernel "65Hz" "sf"
+buildKernel "Q69Hz" "" "$chat_id_bot_log"
 
-buildKernel "67Hz" "sf"
-
-buildKernel "69Hz" "sf"
-
-buildKernel "71Hz" "sf"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_group_indo" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="@ZyCromerZ dah beres,cobain gih ."

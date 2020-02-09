@@ -3,9 +3,8 @@ echo "Cloning dependencies"
 branch="DeadlyCute/20200204/VIPL"
 FolderUpload="DeadlyCute"
 linkKernel="http://bit.ly/DeadlyCute / http://bit.ly/DC-Kernels"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
-
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=markdown" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 
 cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
@@ -25,18 +24,12 @@ GCC="$(pwd)/GetGcc/bin/aarch64-maestro-linux-gnu-"
 IMAGE="$(pwd)/out/arch/arm64/boot/Image.gz-dtb"
 export ARCH=arm64
 export KBUILD_BUILD_USER=ZyCromerZ
-echo "get all cores"
+
 GetCore=$(nproc --all)
 
-echo "setup builder"
-
-echo "prepare push"
 # Push kernel to channel
 
-echo "build started"
-
 TANGGAL=$(date +"%F-%S")
-echo "set tanggal"
 
 wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh

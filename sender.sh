@@ -18,11 +18,11 @@ Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
  
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>"
+- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>" >/dev/null
 }
 pushSF() {
     Zip_File="$(pwd)/$1"
-    rsync -avP -e "ssh -o StrictHostKeyChecking=no" "$Zip_File" $my_host@frs.sourceforge.net:/home/frs/project/zyc-kernel/$FolderUpload/
+    rsync -avP -e "ssh -o StrictHostKeyChecking=no" "$Zip_File" $my_host@frs.sourceforge.net:/home/frs/project/zyc-kernel/$FolderUpload/ >/dev/null
     if [ "$3" != "" ];then
         RefreshRT="$3(oc)"
     else
@@ -31,7 +31,7 @@ pushSF() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
-        -d "parse_mode=markdown" \
+        -d "parse_mode=html" \
         -d text="New kernel !!
 Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 
@@ -41,9 +41,12 @@ Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
 - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-link : $linkKernel"
+link : $linkKernel" >/dev/null
 }
 sendinfo() {
+    if [ ! -z "$3" ];then
+        chat_id="$3"
+    fi
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
@@ -61,7 +64,7 @@ Using compiler:
 - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
 
 Started on <code>$(date)</code>
-<b>Build Status:</b> #$1"
+<b>Build Status:</b> #$1" >/dev/null
 }
 echo "prepare finner"
 # Fin Error
@@ -69,8 +72,8 @@ finerr() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
-        -d "parse_mode=markdown" \
-        -d text="Build kernel from branch : $branch failed -_-"
+        -d "parse_mode=html" \
+        -d text="Build kernel from branch : $branch failed -_-" >/dev/null
     exit 1
 }
 echo "prepare zipping"
@@ -102,6 +105,10 @@ zipping() {
         wget https://github.com/ZyCromerZ/spectrum/raw/master/private-3.0.rc
         cp -af private-3.0.rc init.spectrum.rc
         rm -rf private-3.0.rc
+    elif [[ "$KERNEL_NAME" == *"EmptyGlory"* ]];then
+        wget https://github.com/ZyCromerZ/spectrum/raw/master/private-2.7.rc
+        cp -af private-2.7.rc init.spectrum.rc
+        rm -rf private-2.7.rc
     elif [[ "$KERNEL_NAME" == *"VIP"* ]];then
         wget https://github.com/ZyCromerZ/spectrum/raw/master/vip.rc
         cp -af vip.rc init.spectrum.rc
@@ -129,6 +136,9 @@ zipping() {
     cd .. 
 }
 buildKernel() {
+    if [ ! -z "$3" ];then
+        chat_id="$3"
+    fi
     START=$(date +"%s")
     if [ ! -z "$1" ];then
         if [[ "$1" == *"65Hz"* ]];then
