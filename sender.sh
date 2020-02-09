@@ -44,8 +44,8 @@ Using compiler:
 link : $linkKernel" >/dev/null
 }
 sendinfo() {
-    if [ ! -z "$1" ];then
-        SendTo="$1"
+    if [ ! -z "$2" ];then
+        SendTo="$2"
     else
         SendTo="$chat_id"
     fi
