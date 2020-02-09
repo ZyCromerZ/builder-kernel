@@ -39,7 +39,7 @@ echo "build started"
 TANGGAL=$(date +"%F-%S")
 echo "set tanggal"
 
-wget https://github.com/ZyCromerZ/spectrum/raw/master/sender.sh
+wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh
 . sender.sh
 
