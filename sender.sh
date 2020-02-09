@@ -44,8 +44,8 @@ Using compiler:
 link : $linkKernel" >/dev/null
 }
 sendinfo() {
-    if [ ! -z "$3" ];then
-        chat_id="$3"
+    if [ ! -z "$1" ];then
+        chat_id="$1"
     fi
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="$chat_id" \
