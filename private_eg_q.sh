@@ -39,6 +39,12 @@ sendinfo "PerSoNal" "$chat_id_group_indo"
 
 buildKernel "Q" "" "$chat_id_bot_log"
 
+buildKernel "Q65Hz" "" "$chat_id_bot_log"
+
+buildKernel "Q67Hz" "" "$chat_id_bot_log"
+
 buildKernel "Q69Hz" "" "$chat_id_bot_log"
+
+buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_group_indo" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="@ZyCromerZ dah beres,cobain gih ."
