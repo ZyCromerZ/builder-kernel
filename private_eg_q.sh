@@ -74,9 +74,17 @@ buildKernel "P65Hz" "" "$chat_id_bot_log"
 
 customInfo "$chat_id_group_indo" "$branch-P65Hz dah di build . . ."
 
+buildKernel "P66Hz" "" "$chat_id_bot_log"
+
+customInfo "$chat_id_group_indo" "$branch-P66Hz dah di build . . ."
+
 buildKernel "P67Hz" "" "$chat_id_bot_log"
 
 customInfo "$chat_id_group_indo" "$branch-P67Hz dah di build . . ."
+
+buildKernel "P68Hz" "" "$chat_id_bot_log"
+
+customInfo "$chat_id_group_indo" "$branch-P68Hz dah di build . . ."
 
 buildKernel "P69Hz" "" "$chat_id_bot_log"
 
