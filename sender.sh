@@ -18,8 +18,7 @@ Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
  
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-link : $linkKernel"
+- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>"
 }
 pushSF() {
     Zip_File="$(pwd)/$1"
@@ -117,8 +116,8 @@ zipping() {
     HzNya=""
     if [ ! -z "$1" ];then
         Type="$1"
-        HzNya=${1/"P"/""}
-        HzNya=${HzNya}/"Q"/""}
+        HzNya=${Type/"P"/""}
+        HzNya=${HzNya/"Q"/""}
     fi
     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     if [ "$2" == "sf" ];then
