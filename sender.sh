@@ -180,4 +180,17 @@ buildKernel() {
     DIFF=$(($END - $START))
     zipping "$1" "$2"
 }
+
+customInfo() {
+    if [ ! -z "$1" ];then
+        SendTo="$1"
+    else
+        SendTo="$chat_id"
+    fi
+    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+        -d chat_id="$SendTo" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=html" \
+        -d text="$2" >/dev/null
+}
 echo "include sender.sh success"
