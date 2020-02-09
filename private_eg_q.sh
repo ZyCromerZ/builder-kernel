@@ -32,7 +32,7 @@ GetCore=$(nproc --all)
 TANGGAL=$(date +"%F-%S")
 
 wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
-chmod +x sender.shchat_id
+chmod +x sender.sh
 . sender.sh
 
 sendinfo "PerSoNal" "$chat_id_group_indo"
