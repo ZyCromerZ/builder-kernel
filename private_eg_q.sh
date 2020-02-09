@@ -47,4 +47,20 @@ buildKernel "Q69Hz" "" "$chat_id_bot_log"
 
 buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/f4145eff14f9b35a426f881132e49c8af6077e87.patch | git am -3
+
+GetBranch=$(git rev-parse --abbrev-ref HEAD)
+GetCommit=$(git log --pretty=format:'%h' -1)
+HeadCommit=$GetCommit
+
+buildKernel "P" "" "$chat_id_bot_log"
+
+buildKernel "P65Hz" "" "$chat_id_bot_log"
+
+buildKernel "P67Hz" "" "$chat_id_bot_log"
+
+buildKernel "P69Hz" "" "$chat_id_bot_log"
+
+buildKernel "P71Hz" "" "$chat_id_bot_log"
+
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_group_indo" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="@ZyCromerZ dah beres,cobain gih ."
