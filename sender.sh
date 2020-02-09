@@ -45,10 +45,12 @@ link : $linkKernel" >/dev/null
 }
 sendinfo() {
     if [ ! -z "$1" ];then
-        chat_id="$1"
+        SendTo="$1"
+    else
+        SendTo="$chat_id"
     fi
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
+        -d chat_id="$SendTo" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
         -d text="Build started on <code>Circle CI/CD</code>
@@ -106,9 +108,9 @@ zipping() {
         cp -af private-3.0.rc init.spectrum.rc
         rm -rf private-3.0.rc
     elif [[ "$KERNEL_NAME" == *"EmptyGlory"* ]];then
-        wget https://github.com/ZyCromerZ/spectrum/raw/master/private-2.7.rc
-        cp -af private-2.7.rc init.spectrum.rc
-        rm -rf private-2.7.rc
+        wget https://github.com/ZyCromerZ/spectrum/raw/master/private-private-3.0_2.rc
+        cp -af private-3.0_2.rc init.spectrum.rc
+        rm -rf private-3.0_2.rc
     elif [[ "$KERNEL_NAME" == *"VIP"* ]];then
         wget https://github.com/ZyCromerZ/spectrum/raw/master/vip.rc
         cp -af vip.rc init.spectrum.rc
