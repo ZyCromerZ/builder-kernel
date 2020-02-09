@@ -147,9 +147,17 @@ buildKernel() {
             git reset $HeadCommit --hard
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/53611dfaddbca9e6c7ef52e558cf98a483bdcd84.patch | git am -3
         fi
+        if [[ "$1" == *"66Hz"* ]];then
+            git reset $HeadCommit --hard
+            curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/0438496fb3e84724afc5e239d6b56c7937a74fbc.patch | git am -3
+        fi
         if [[ "$1" == *"67Hz"* ]];then
             git reset $HeadCommit --hard
             curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/1e89a8453eb9a23f25e405510bcf2055522f2c94.patch | git am -3
+        fi
+        if [[ "$1" == *"68Hz"* ]];then
+            git reset $HeadCommit --hard
+            curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/37147e430b15a01d56484a8d550a02a298fdbadf.patch | git am -3
         fi
         if [[ "$1" == *"69Hz"* ]];then
             git reset $HeadCommit --hard
