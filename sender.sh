@@ -117,7 +117,7 @@ zipping() {
         rm -rf vip.rc
     fi
     cp -af anykernel-real.sh anykernel.sh
-    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME- by ZyCromerZ/g" anykernel.sh
+    sed -i "s/kernel.string=.*/kernel.string=$KERNEL_NAME by ZyCromerZ@$GetCommit/g" anykernel.sh
         if [ -e init.spectrum.rc ];then
             sed -i "s/setprop persist.spectrum.kernel.*/setprop persist.spectrum.kernel $KERNEL_NAME/g" init.spectrum.rc
         fi
