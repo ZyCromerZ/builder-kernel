@@ -15,6 +15,7 @@ Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 
 - Kernel name : $2
 - Refreshrate : $RefreshRT
+- Pass Protected : $4
  
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
@@ -37,6 +38,7 @@ Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 
 - Kernel name : $2
 - Refreshrate : $RefreshRT
+- Pass Protected : $4
  
 Using compiler: 
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
@@ -123,6 +125,7 @@ zipping() {
         fi
     Type=""
     HzNya=""
+    PassProteted="No"
     if [ ! -z "$1" ];then
         Type="$1"
         HzNya=${Type/"P"/""}
@@ -132,11 +135,12 @@ zipping() {
         zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
     else
         zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" --password "$3" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+        PassProteted="Yes"
     fi
     if [ "$2" == "sf" ];then
-        pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" "$KERNEL_NAME" "$HzNya"
+        pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" "$KERNEL_NAME" "$HzNya" "$PassProteted"
     else
-        push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" "$KERNEL_NAME" "$HzNya"
+        push "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" "$KERNEL_NAME" "$HzNya" "$PassProteted"
     fi
     rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip"
     cd .. 
