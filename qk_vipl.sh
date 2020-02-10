@@ -3,7 +3,7 @@ echo "Cloning dependencies"
 branch="QuantumKiller/20200210/VIPL"
 FolderUpload="QuantumKiller/RC-KERNELS"
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
+# curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
 
 cd kernel
@@ -37,19 +37,19 @@ chmod +x sender.sh
 
 sendinfo "TEST-VIPN"
 
-buildKernel "" "sf"
+# buildKernel "" "sf"
 
-buildKernel "65Hz" "sf"
+# buildKernel "65Hz" "sf"
 
-buildKernel "66Hz" "sf"
+# buildKernel "66Hz" "sf"
 
-buildKernel "67Hz" "sf"
+# buildKernel "67Hz" "sf"
 
-buildKernel "68Hz" "sf"
+# buildKernel "68Hz" "sf"
 
-buildKernel "69Hz" "sf"
+# buildKernel "69Hz" "sf"
 
-buildKernel "71Hz" "sf"
+# buildKernel "71Hz" "sf"
 
 git reset --hard $HeadCommit
 
@@ -69,19 +69,19 @@ GetCommit=$(git log --pretty=format:'%h' -1)
 
 HeadCommit=$GetCommit
 
-buildKernel "" "sf"
+# buildKernel "" "sf"
 
-buildKernel "65Hz" "sf"
+# buildKernel "65Hz" "sf"
 
-buildKernel "66Hz" "sf"
+# buildKernel "66Hz" "sf"
 
-buildKernel "67Hz" "sf"
+# buildKernel "67Hz" "sf"
 
-buildKernel "68Hz" "sf"
+# buildKernel "68Hz" "sf"
 
-buildKernel "69Hz" "sf"
+# buildKernel "69Hz" "sf"
 
-buildKernel "71Hz" "sf"
+# buildKernel "71Hz" "sf"
 
 git reset --hard $HeadCommit
 
