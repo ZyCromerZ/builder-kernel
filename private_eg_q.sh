@@ -41,27 +41,27 @@ buildKernel "Q" "" "$chat_id_bot_log"
 
 customInfo "$chat_id_group_indo" "$branch-Q60Hz dah di build . . ."
 
-buildKernel "Q65Hz" "" "$chat_id_bot_log"
+buildKernel "Q65Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q65Hz dah di build . . ."
 
-buildKernel "Q66Hz" "" "$chat_id_bot_log"
+buildKernel "Q66Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q66Hz dah di build . . ."
 
-buildKernel "Q67Hz" "" "$chat_id_bot_log"
+buildKernel "Q67Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q67Hz dah di build . . ."
 
-buildKernel "Q68Hz" "" "$chat_id_bot_log"
+buildKernel "Q68Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q68Hz dah di build . . ."
 
-buildKernel "Q69Hz" "" "$chat_id_bot_log"
+buildKernel "Q69Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q69Hz dah di build . . ."
 
-buildKernel "Q71Hz" "" "$chat_id_bot_log"
+buildKernel "Q71Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
@@ -78,27 +78,27 @@ buildKernel "P" "" "$chat_id_bot_log"
 
 customInfo "$chat_id_group_indo" "$branch-P60Hz dah di build . . ."
 
-buildKernel "P65Hz" "" "$chat_id_bot_log"
+buildKernel "P65Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P65Hz dah di build . . ."
 
-buildKernel "P66Hz" "" "$chat_id_bot_log"
+buildKernel "P66Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P66Hz dah di build . . ."
 
-buildKernel "P67Hz" "" "$chat_id_bot_log"
+buildKernel "P67Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P67Hz dah di build . . ."
 
-buildKernel "P68Hz" "" "$chat_id_bot_log"
+buildKernel "P68Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P68Hz dah di build . . ."
 
-buildKernel "P69Hz" "" "$chat_id_bot_log"
+buildKernel "P69Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P69Hz dah di build . . ."
 
-buildKernel "P71Hz" "" "$chat_id_bot_log"
+buildKernel "P71Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-P71Hz dah di build . . ."
 
