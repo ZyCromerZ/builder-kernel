@@ -61,6 +61,12 @@ FolderUpload="DeadlyCute/TEST"
 
 linkKernel="http://bit.ly/DeadlyCute / http://bit.ly/DC-Kernels"
 
+GetBranch=$(git rev-parse --abbrev-ref HEAD)
+
+GetCommit=$(git log --pretty=format:'%h' -1)
+
+HeadCommit=$GetCommit
+
 buildKernel "" "sf"
 
 buildKernel "65Hz" "sf"
