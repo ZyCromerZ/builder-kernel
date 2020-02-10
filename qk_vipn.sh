@@ -35,21 +35,21 @@ wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh
 . sender.sh
 
-sendinfo "TEST-VIPN"
+# sendinfo "TEST-VIPN"
 
-buildKernel "" "sf"
+# buildKernel "" "sf"
 
-buildKernel "65Hz" "sf"
+# buildKernel "65Hz" "sf"
 
-buildKernel "66Hz" "sf"
+# buildKernel "66Hz" "sf"
 
-buildKernel "67Hz" "sf"
+# buildKernel "67Hz" "sf"
 
-buildKernel "68Hz" "sf"
+# buildKernel "68Hz" "sf"
 
-buildKernel "69Hz" "sf"
+# buildKernel "69Hz" "sf"
 
-buildKernel "71Hz" "sf"
+# buildKernel "71Hz" "sf"
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ebd58857886520656f926c161f3c01d44aed6ea7.patch | git am -3
 
@@ -67,7 +67,7 @@ GetCommit=$(git log --pretty=format:'%h' -1)
 
 HeadCommit=$GetCommit
 
-buildKernel "" "sf"
+# buildKernel "" "sf"
 
 buildKernel "65Hz" "sf"
 
