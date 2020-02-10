@@ -82,3 +82,39 @@ buildKernel "68Hz" "sf"
 buildKernel "69Hz" "sf"
 
 buildKernel "71Hz" "sf"
+
+git reset --hard $HeadCommit
+
+git reset --hard HEAD~1
+
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/f7ca978dfc42021764aa7b680753aa79f48b0a41.patch | git am -3
+
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/05e1b2d14da410a5df00e669003b7c2f6ecde0e8.patch | git am -3
+
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/6621a4faa26ebf75bda67c4c8462b3dca57270c9.patch | git am -3
+
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/b7b2ab25f888e4c3e6082ba35a15e603da6383c3.patch | git am -3
+
+FolderUpload="QuantumKiller/SAR-RC-KERNELS"
+
+linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
+
+GetBranch=$(git rev-parse --abbrev-ref HEAD)
+
+GetCommit=$(git log --pretty=format:'%h' -1)
+
+HeadCommit=$GetCommit
+
+buildKernel "" "sf"
+
+buildKernel "65Hz" "sf"
+
+buildKernel "66Hz" "sf"
+
+buildKernel "67Hz" "sf"
+
+buildKernel "68Hz" "sf"
+
+buildKernel "69Hz" "sf"
+
+buildKernel "71Hz" "sf"
