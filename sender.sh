@@ -109,6 +109,10 @@ zipping() {
         wget https://github.com/ZyCromerZ/spectrum/raw/master/private-3.0.rc
         cp -af private-3.0.rc init.spectrum.rc
         rm -rf private-3.0.rc
+    elif [[ "$KERNEL_NAME" == *"EmptyGlory-N"* ]];then
+        wget https://github.com/ZyCromerZ/spectrum/raw/master/vip_2.rc
+        cp -af vip_2.rc init.spectrum.rc
+        rm -rf vip_2.rc
     elif [[ "$KERNEL_NAME" == *"EmptyGlory"* ]];then
         wget https://github.com/ZyCromerZ/spectrum/raw/master/private-3.0_2.rc
         cp -af private-3.0_2.rc init.spectrum.rc
