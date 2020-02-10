@@ -65,9 +65,9 @@ buildKernel "Q71Hz" "" "$chat_id_bot_log" "$kernel_password"
 
 customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
-
 git reset --hard $HeadCommit
+
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
