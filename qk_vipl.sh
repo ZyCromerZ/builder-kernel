@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-branch="QuantumKiller/20200210/VIPN"
+branch="QuantumKiller/20200210/VIPL"
 FolderUpload="QuantumKiller/RC-KERNELS"
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
@@ -53,9 +53,9 @@ buildKernel "71Hz" "sf"
 
 git reset --hard $HeadCommit
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ebd58857886520656f926c161f3c01d44aed6ea7.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/88f9ba4a29a95a0809138b52b0c09f4baf72df36.patch | git am -3
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/29c849ade6911981b4d0fb03c8dc04ebf03df3c6.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/37446c4429f4fbdbcfa20e965a978e25ddf41eb2.patch | git am -3
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
