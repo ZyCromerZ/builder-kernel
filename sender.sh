@@ -131,12 +131,12 @@ zipping() {
         HzNya=${Type/"P"/""}
         HzNya=${HzNya/"Q"/""}
     fi
-    if [ ! -z "$3" ];then
-        zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" --password "$3" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
-        PassProteted="Yes"
-    else
-        zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
-    fi
+    # if [ ! -z "$3" ];then
+    #     zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" --password "$3" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+    #     PassProteted="Yes"
+    # else
+    zip -r "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" ./ -x /.git/* ./anykernel-real.sh ./.gitignore ./LICENSE ./README.md  >/dev/null 2>&1
+    # fi
     if [ "$2" == "sf" ];then
         pushSF "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip" "$KERNEL_NAME" "$HzNya" "$PassProteted"
     else
@@ -194,7 +194,7 @@ buildKernel() {
     cp -af out/arch/arm64/boot/Image.gz-dtb AnyKernel
     END=$(date +"%s")
     DIFF=$(($END - $START))
-    zipping "$1" "$2" "$4"
+    zipping "$1" "$2"
 }
 
 customInfo() {
