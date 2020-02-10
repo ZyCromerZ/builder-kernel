@@ -13,7 +13,7 @@ HeadCommit=$GetCommit
 echo "getting last commit"
 GetREALlog="$(git log --pretty='format:%C(auto)%h : %s' -1)"
 Getlog="${GetREALlog/\&/"and"}"
-git clone --depth=1 https://github.com/NusantaraDevs/clang.git -b dev/11.0 Getclang
+git clone --depth=1 https://github.com/Haseo97/Clang-11.0.0.git -b 11.0.0 Getclang
 git clone --depth=1 https://github.com/baalajimaestro/aarch64-maestro-linux-android.git -b 05022020 GetGcc
 git clone --depth=1 https://github.com/ZyCromerZ/AnyKernel3 AnyKernel
 
