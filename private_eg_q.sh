@@ -3,7 +3,7 @@ echo "Cloning dependencies"
 branch="EmptyGlory/20200209/q"
 # FolderUpload="QuantumKiller"
 # linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
-curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_group_indo" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_bot_log" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel_other
 
 cd kernel_other
@@ -35,7 +35,7 @@ wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh
 . sender.sh
 
-# sendinfo "PerSoNal" "$chat_id_group_indo"
+sendinfo "PerSoNal" "$chat_id_bot_log"
 
 # buildKernel "Q" "" "$chat_id_bot_log"
 
@@ -57,13 +57,13 @@ chmod +x sender.sh
 
 # customInfo "$chat_id_group_indo" "$branch-Q68Hz dah di build . . ."
 
-# buildKernel "Q69Hz" "" "$chat_id_bot_log"
+buildKernel "Q69Hz" "" "$chat_id_bot_log"
 
 # customInfo "$chat_id_group_indo" "$branch-Q69Hz dah di build . . ."
 
 buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
 # git reset --hard $HeadCommit
 
