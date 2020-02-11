@@ -35,71 +35,71 @@ wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh
 . sender.sh
 
-sendinfo "PerSoNal" "$chat_id_group_indo"
+# sendinfo "PerSoNal" "$chat_id_group_indo"
 
-buildKernel "Q" "" "$chat_id_bot_log"
+# buildKernel "Q" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q60Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q60Hz dah di build . . ."
 
-buildKernel "Q65Hz" "" "$chat_id_bot_log"
+# buildKernel "Q65Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q65Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q65Hz dah di build . . ."
 
-buildKernel "Q66Hz" "" "$chat_id_bot_log"
+# buildKernel "Q66Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q66Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q66Hz dah di build . . ."
 
-buildKernel "Q67Hz" "" "$chat_id_bot_log"
+# buildKernel "Q67Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q67Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q67Hz dah di build . . ."
 
-buildKernel "Q68Hz" "" "$chat_id_bot_log"
+# buildKernel "Q68Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q68Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q68Hz dah di build . . ."
 
-buildKernel "Q69Hz" "" "$chat_id_bot_log"
+# buildKernel "Q69Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-Q69Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-Q69Hz dah di build . . ."
 
 buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
 customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
-git reset --hard $HeadCommit
+# git reset --hard $HeadCommit
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
+# curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
-GetBranch=$(git rev-parse --abbrev-ref HEAD)
-GetCommit=$(git log --pretty=format:'%h' -1)
+# GetBranch=$(git rev-parse --abbrev-ref HEAD)
+# GetCommit=$(git log --pretty=format:'%h' -1)
 
-HeadCommit=$GetCommit
+# HeadCommit=$GetCommit
 
-buildKernel "P" "" "$chat_id_bot_log"
+# buildKernel "P" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P60Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P60Hz dah di build . . ."
 
-buildKernel "P65Hz" "" "$chat_id_bot_log"
+# buildKernel "P65Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P65Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P65Hz dah di build . . ."
 
-buildKernel "P66Hz" "" "$chat_id_bot_log"
+# buildKernel "P66Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P66Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P66Hz dah di build . . ."
 
-buildKernel "P67Hz" "" "$chat_id_bot_log"
+# buildKernel "P67Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P67Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P67Hz dah di build . . ."
 
-buildKernel "P68Hz" "" "$chat_id_bot_log"
+# buildKernel "P68Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P68Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P68Hz dah di build . . ."
 
-buildKernel "P69Hz" "" "$chat_id_bot_log"
+# buildKernel "P69Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P69Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P69Hz dah di build . . ."
 
-buildKernel "P71Hz" "" "$chat_id_bot_log"
+# buildKernel "P71Hz" "" "$chat_id_bot_log"
 
-customInfo "$chat_id_group_indo" "$branch-P71Hz dah di build . . ."
+# customInfo "$chat_id_group_indo" "$branch-P71Hz dah di build . . ."
 
 customInfo "$chat_id_group_indo" "@ZyCromerZ semuanya dah beres,cobain gih . . . ."
