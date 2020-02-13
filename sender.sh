@@ -29,21 +29,21 @@ pushSF() {
     else
         RefreshRT="60Hz(default)"
     fi
-    curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
-        -d chat_id="$chat_id" \
-        -d "disable_web_page_preview=true" \
-        -d "parse_mode=html" \
-        -d text="New kernel !!
-Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
+#     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
+#         -d chat_id="$chat_id" \
+#         -d "disable_web_page_preview=true" \
+#         -d "parse_mode=html" \
+#         -d text="New kernel !!
+# Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s).
 
-- Kernel name : $2
-- Refreshrate : $RefreshRT
-- Pass Protected : $4
+# - Kernel name : $2
+# - Refreshrate : $RefreshRT
+# - Pass Protected : $4
  
-Using compiler: 
-- <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-- <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
-link : $linkKernel" >/dev/null
+# Using compiler: 
+# - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+# - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
+# link : $linkKernel" >/dev/null
 }
 sendinfo() {
     if [ ! -z "$2" ];then
