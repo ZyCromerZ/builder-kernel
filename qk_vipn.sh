@@ -10,6 +10,7 @@ cd kernel
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
 HeadCommit=$GetCommit
+FirstCommit=$HeadCommit
 echo "getting last commit"
 GetREALlog="$(git log --pretty='format:%C(auto)%h : %s' -1)"
 Getlog="${GetREALlog/\&/"and"}"
@@ -83,9 +84,7 @@ buildKernel "69Hz" "sf"
 
 buildKernel "71Hz" "sf"
 
-git reset --hard $HeadCommit
-
-git reset --hard HEAD~1
+git reset --hard $FirstCommit
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ba5d9a03ca146d95309f1b7f53229a35d0ad08e9.patch | git am -3
 
