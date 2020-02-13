@@ -65,7 +65,7 @@ buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
 # customInfo "$chat_id_group_indo" "$branch-Q71Hz dah di build . . ."
 
-# git reset --hard $HeadCommit
+git reset --hard $HeadCommit
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
