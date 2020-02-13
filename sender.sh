@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-push() {
+function push() {
     ZIP="$1"
     if [ "$3" != "" ];then
         RefreshRT="$3(oc)"
@@ -21,7 +21,7 @@ Using compiler:
 - <code>$(${GCC}gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
 - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>" >/dev/null
 }
-pushSF() {
+function pushSF() {
     Zip_File="$(pwd)/$1"
     rsync -avP -e "ssh -o StrictHostKeyChecking=no" "$Zip_File" $my_host@frs.sourceforge.net:/home/frs/project/zyc-kernel/$FolderUpload/ >/dev/null
     if [ "$3" != "" ];then
@@ -45,7 +45,7 @@ pushSF() {
 # - <code>$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')</code>
 # link : $linkKernel" >/dev/null
 }
-sendinfo() {
+function sendinfo() {
     if [ ! -z "$2" ];then
         SendTo="$2"
     else
@@ -72,7 +72,7 @@ Started on <code>$(date)</code>
 }
 echo "prepare finner"
 # Fin Error
-finerr() {
+function finerr() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
@@ -82,7 +82,7 @@ finerr() {
 }
 echo "prepare zipping"
 # Zipping
-zipping() {
+function zipping() {
     KERNEL_NAME=$(cat "$(pwd)/arch/arm64/configs/X01BD_defconfig" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
     ZIP_KERNEL_VERSION="4.4.$(cat "$(pwd)/Makefile" | grep "SUBLEVEL =" | sed 's/SUBLEVEL = *//g')"
     cd AnyKernel || exit 1
@@ -149,7 +149,7 @@ zipping() {
     rm -rf "$Type[$TANGGAL]$ZIP_KERNEL_VERSION-$KERNEL_NAME-$GetCommit.zip"
     cd .. 
 }
-buildKernel() {
+function buildKernel() {
     if [ ! -z "$3" ];then
         chat_id="$3"
     fi
@@ -201,7 +201,7 @@ buildKernel() {
     zipping "$1" "$2"
 }
 
-customInfo() {
+function customInfo() {
     if [ ! -z "$1" ];then
         SendTo="$1"
     else
