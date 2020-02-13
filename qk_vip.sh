@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 branch="QuantumKiller/20200210/VIPN"
-FolderUpload="QuantumKiller"
+FolderUpload="QuantumKiller/RC-KERNELS"
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 # curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
@@ -53,13 +53,13 @@ buildKernel "71Hz" "sf"
 
 git reset --hard $HeadCommit
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ebd58857886520656f926c161f3c01d44aed6ea7.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/7d03394e4cca7cd4ac019362099114eb0d177276.patch | git am -3
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/29c849ade6911981b4d0fb03c8dc04ebf03df3c6.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/e78be088d7106013774d8d8274b4ba46080dd40d.patch | git am -3
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
-FolderUpload="DeadlyCute"
+FolderUpload="DeadlyCute/RC-KERNELS"
 
 linkKernel="http://bit.ly/DeadlyCute / http://bit.ly/DC-Kernels"
 
@@ -87,15 +87,15 @@ git reset --hard $HeadCommit
 
 git reset --hard HEAD~1
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ba5d9a03ca146d95309f1b7f53229a35d0ad08e9.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/7d03394e4cca7cd4ac019362099114eb0d177276.patch | git am -3
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/29f98c9c089752ff4c76bcad491e0cf63fd4d621.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/e8ce648ecfb68d81882dbbdad0a64e13b7e3b6e9.patch | git am -3
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/6621a4faa26ebf75bda67c4c8462b3dca57270c9.patch | git am -3
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/b7b2ab25f888e4c3e6082ba35a15e603da6383c3.patch | git am -3
 
-FolderUpload="QuantumKiller/SAR"
+FolderUpload="QuantumKiller/SAR-RC-KERNELS"
 
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 
