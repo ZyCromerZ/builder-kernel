@@ -4,9 +4,9 @@ branch="EmptyGlory/20200209/q"
 # FolderUpload="QuantumKiller"
 # linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 # curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id_bot_log" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
-git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel_other
+git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel_lolz
 
-cd kernel_other
+cd kernel_lolz
 GetBranch=$(git rev-parse --abbrev-ref HEAD)
 GetCommit=$(git log --pretty=format:'%h' -1)
 HeadCommit=$GetCommit
@@ -67,12 +67,12 @@ buildKernel "Q71Hz" "" "$chat_id_bot_log"
 
 # git reset --hard $HeadCommit
 
-# curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
-# GetBranch=$(git rev-parse --abbrev-ref HEAD)
-# GetCommit=$(git log --pretty=format:'%h' -1)
+GetBranch=$(git rev-parse --abbrev-ref HEAD)
+GetCommit=$(git log --pretty=format:'%h' -1)
 
-# HeadCommit=$GetCommit
+HeadCommit=$GetCommit
 
 buildKernel "P" "" "$chat_id_bot_log"
 
