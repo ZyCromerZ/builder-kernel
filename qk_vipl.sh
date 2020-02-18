@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 branch="QuantumKiller/20200210/VIPL"
-FolderUpload="QuantumKiller"
+FolderUpload="QuantumKiller/RC-KERNELS"
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 # curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" -d chat_id="$chat_id" -d "disable_web_page_preview=true" -d "parse_mode=html" -d text="prepare build kernel from <code>https://github.com/ZyCromerZ/android_kernel_asus_X01BD/tree/$branch</code>"
 git clone --depth=1 https://github.com/ZyCromerZ/android_kernel_asus_X01BD -b $branch  kernel
@@ -60,7 +60,7 @@ curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/37446c4429f4f
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/959a49f0e7efb16443dbf17d3abaa5dbbc514425.patch | git am -3
 
-FolderUpload="DeadlyCute"
+FolderUpload="DeadlyCute/RC-KERNELS"
 
 linkKernel="http://bit.ly/DeadlyCute / http://bit.ly/DC-Kernels"
 
@@ -94,7 +94,7 @@ curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/6621a4faa26eb
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/b7b2ab25f888e4c3e6082ba35a15e603da6383c3.patch | git am -3
 
-FolderUpload="QuantumKiller/SAR"
+FolderUpload="QuantumKiller/SAR-RC-KERNELS"
 
 linkKernel="http://bit.ly/QuantumKiller or http://bit.ly/QK-kernels"
 
