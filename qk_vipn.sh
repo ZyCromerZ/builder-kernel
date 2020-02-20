@@ -86,7 +86,7 @@ buildKernel "71Hz" "sf"
 
 git reset --hard $FirstCommit
 
-curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ba5d9a03ca146d95309f1b7f53229a35d0ad08e9.patch | git am -3
+curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/ebd58857886520656f926c161f3c01d44aed6ea7.patch | git am -3
 
 curl https://github.com/ZyCromerZ/android_kernel_asus_X01BD/commit/29f98c9c089752ff4c76bcad491e0cf63fd4d621.patch | git am -3
 
