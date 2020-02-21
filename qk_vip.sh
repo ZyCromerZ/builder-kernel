@@ -36,7 +36,7 @@ wget https://github.com/ZyCromerZ/builder-kernel/raw/master/sender.sh
 chmod +x sender.sh
 . sender.sh
 
-sendinfo "VIPN"
+# sendinfo "VIPN"
 
 buildKernel "" "sf"
 
